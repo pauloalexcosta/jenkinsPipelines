@@ -37,7 +37,7 @@ pipeline {
     stage('Clear the leftovers') {
       steps {
         script {
-          fileOperations([folderDeleteOperation('Reports'), fileDeleteOperation(excludes: '', includes: 'Report.zip')])
+          fileOperations([folderDeleteOperation('Reports'), fileDeleteOperation(excludes: '', includes: 'Report.zip'), fileDeleteOperation(excludes: '', includes: '*.jtl')])
         }
         
       }
