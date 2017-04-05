@@ -5,10 +5,10 @@ pipeline {
       steps {
         script {
           fileOperations([folderDeleteOperation('Reports'), fileDeleteOperation(excludes: '', includes: 'Report.zip'), fileDeleteOperation(excludes: '', includes: '*.jtl')])
-        	}
-	     }
-		
-	  }
+        }
+        
+      }
+    }
     stage('Run JMeter Test') {
       steps {
         bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -n -t E:/JMeter/Resources/CTT/PhaseI/AppCTT.jmx -l test.jtl', encoding: 'UTF8')
