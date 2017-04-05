@@ -37,7 +37,7 @@ pipeline {
     stage('Clear the leftovers') {
       steps {
         script {
-          $class: 'WsCleanup
+          $class: 'WsCleanup'
         }
         
       }
