@@ -22,7 +22,7 @@ pipeline {
             
           },
           "Archive HTML Report": {
-            zip(dir: 'Reports', archive: true, zipFile: 'Reports.zip')
+            zip(dir: '**/Reports', archive: true, zipFile: 'Reports.zip')
             
           }
         )
