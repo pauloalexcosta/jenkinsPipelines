@@ -37,7 +37,7 @@ pipeline {
     stage('Clear the leftovers') {
       steps {
         script {
-          $class: 'WsCleanup'
+          fileOperations([folderDeleteOperation('Reports'), fileDeleteOperation(excludes: '', includes: 'Report.zip')])
         }
         
       }
