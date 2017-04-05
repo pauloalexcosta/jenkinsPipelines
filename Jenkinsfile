@@ -20,17 +20,13 @@ pipeline {
           "Create Jmeter HTML": {
             bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g test.jtl -o Reports/', encoding: 'utf8', returnStdout: true)
             
-          },
-          "Archive HTML Report": {
-            zip(dir: '**/Reports', archive: true, zipFile: 'Reports.zip')
-            
           }
         )
       }
     }
-    stage('Email Me') {
+    stage('Archive the HTML Report') {
       steps {
-        emailext(subject: 'Tests Completed', attachLog: true, attachmentsPattern: 'test.jtl', body: 'It\'s done!', to: 'paulo.costa@outmail.com')
+        zip(zipFile: 'Report.zip', archive: true, dir: 'Reports')
       }
     }
   }
