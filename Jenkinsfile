@@ -34,5 +34,10 @@ pipeline {
         emailext(subject: 'Jmeter Test has finished', body: 'Take it.', to: 'paulo.alexandre@gmail.com', attachmentsPattern: 'Report.zip', attachLog: true)
       }
     }
+    stage('Clear the leftovers') {
+      steps {
+        deleteDir()
+      }
+    }
   }
 }
