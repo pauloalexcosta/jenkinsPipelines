@@ -31,7 +31,7 @@ pipeline {
     }
     stage('Email') {
       steps {
-        emailext(subject: 'Jmeter Test has finished', body: 'Take it.', to: 'paulo.alexandre@gmail.com', attachmentsPattern: 'Report.zip', attachLog: true)
+        emailext(subject: 'Jmeter Test has finished', body: 'Take it.', to: 'paulo.alexandre@gmail.com', attachmentsPattern: 'Report.zip')
       }
     }
     stage('Clear the leftovers') {
