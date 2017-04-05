@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Run JMeter Test') {
       steps {
-        bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -n -t E:/JMeter/Resources/CTT/PhaseI/AppCTT.jmx -l test.jtl', returnStdout: true)
+        bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -n -t E:/JMeter/Resources/CTT/PhaseI/AppCTT.jmx -l test.jtl', encoding: 'UTF8')
         archiveArtifacts(artifacts: 'test.jtl', allowEmptyArchive: true, onlyIfSuccessful: true)
       }
     }
@@ -18,7 +18,11 @@ pipeline {
             
           },
           "Create Jmeter HTML": {
-            bat 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g test.jtl -o Reports/'
+            bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g test.jtl -o Reports/', encoding: 'utf8', returnStdout: true)
+            
+          },
+          "Archive HTML Report": {
+            zip(dir: 'Reports', archive: true, zipFile: 'Reports.zip')
             
           }
         )
