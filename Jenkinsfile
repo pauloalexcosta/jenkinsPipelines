@@ -36,7 +36,10 @@ pipeline {
     }
     stage('Clear the leftovers') {
       steps {
-        deleteDir()
+        script {
+          $class: 'WsCleanup']
+        }
+        
       }
     }
   }
