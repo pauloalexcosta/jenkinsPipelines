@@ -26,7 +26,7 @@ pipeline {
             
           },
           "Create Jmeter HTML": {
-            bat(script: 'REM E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g test.jtl -o Reports/', encoding: 'utf8', returnStdout: true)
+            bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g test.jtl -o Reports/', encoding: 'utf8', returnStdout: true)
             
           }
         )
