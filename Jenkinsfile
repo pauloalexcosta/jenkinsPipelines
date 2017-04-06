@@ -1,9 +1,17 @@
 pipeline {
   agent any
   stages {
+    stage('A Fresh Workspace') {
+      steps {
+        script {
+          fileOperations([folderDeleteOperation('Reports'), fileDeleteOperation(excludes: '', includes: 'Report.zip')])
+        }
+        
+      }
+    }
     stage('Run JMeter Test') {
       steps {
-        bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -n -t E:/JMeter/Resources/CTT/PhaseI/AppCTT.jmx -l test.jtl', returnStdout: true)
+        bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -n -t E:/JMeter/Resources/CTT/PhaseI/AppCTT.jmx -l test.jtl', encoding: 'UTF8')
         archiveArtifacts(artifacts: 'test.jtl', allowEmptyArchive: true, onlyIfSuccessful: true)
       }
     }
@@ -12,21 +20,26 @@ pipeline {
         parallel(
           "Run Performance Plugin": {
             script {
-              performanceReport compareBuildPrevious: true, configType: 'ART', errorFailedThreshold: 10, errorUnstableResponseTimeThreshold: '', errorUnstableThreshold: 5, failBuildIfNoResultFile: false, ignoreFailedBuilds: true, ignoreUnstableBuilds: true, modeOfThreshold: false, modePerformancePerTestCase: true, modeThroughput: false, nthBuildNumber: 0, parsers: [[$class: 'JMeterCsvParser', delimiter: ',', glob: 'test.jtl', pattern: 'timeStamp,elapsed,url,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,Latency,IdleTime,Connect', skipFirstLine: true]], relativeFailedThresholdNegative: 6, relativeFailedThresholdPositive: 10, relativeUnstableThresholdNegative: 1, relativeUnstableThresholdPositive: 5
+              performanceReport compareBuildPrevious: true, configType: 'PRT', errorFailedThreshold: 3, errorUnstableResponseTimeThreshold: '', errorUnstableThreshold: 1, failBuildIfNoResultFile: true, modeOfThreshold: true, modePerformancePerTestCase: true, modeThroughput: true, nthBuildNumber: 0, parsers: [[$class: 'JMeterCsvParser', delimiter: ',', glob: 'test.jtl', pattern: 'timeStamp,elapsed,url,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,Latency,IdleTime,Connect', skipFirstLine: true]], relativeFailedThresholdNegative: 50, relativeFailedThresholdPositive: 50, relativeUnstableThresholdNegative: 20, relativeUnstableThresholdPositive: 20
             }
             
             
           },
           "Create Jmeter HTML": {
-            bat 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g test.jtl -o Reports/'
+            bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g test.jtl -o Reports/', encoding: 'utf8', returnStdout: true)
             
           }
         )
       }
     }
-    stage('Email Me') {
+    stage('Archive the HTML Report') {
       steps {
-        emailext(subject: 'Tests Completed', attachLog: true, attachmentsPattern: 'test.jtl', body: 'It\'s done!', to: 'paulo.costa@outmail.com')
+        zip(zipFile: 'Report.zip', archive: true, dir: 'Reports')
+      }
+    }
+    stage('Email') {
+      steps {
+        emailext(subject: 'Jmeter Test has finished', body: 'Take it.', to: 'paulo.alexandre@gmail.com', attachmentsPattern: 'Report.zip')
       }
     }
   }
