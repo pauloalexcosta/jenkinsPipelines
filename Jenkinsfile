@@ -4,7 +4,7 @@ pipeline {
     stage('A Fresh Workspace') {
       steps {
         script {
-          fileOperations([folderDeleteOperation('Reports'), fileDeleteOperation(excludes: '', includes: 'Report.zip')])
+          fileOperations([folderDeleteOperation('Reports'), fileDeleteOperation(excludes: '', includes: 'Report.zip'), fileDeleteOperation(excludes: '', includes: 'E:/JMeter/Resources/Webinar/Results/TaskManagerResults.csv')])
         }
         
       }
@@ -26,7 +26,7 @@ pipeline {
             
           },
           "Create Jmeter HTML": {
-            bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g E:\JMeter\Resources\Webinar\Results\TaskManagerResults.csv -o Reports/', encoding: 'utf8', returnStdout: true)
+            bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g E:/JMeter/Resources/Webinar/Results/TaskManagerResults.csv -o Reports/', encoding: 'utf8', returnStdout: true)
             
           }
         )
