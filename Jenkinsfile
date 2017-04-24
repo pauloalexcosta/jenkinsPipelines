@@ -4,6 +4,7 @@ pipeline {
     stage('A Fresh Workspace') {
       steps {
         script {
+          fileOperations([folderDeleteOperation('Reports'), fileDeleteOperation(excludes: '', includes: 'Report.zip','TaskManager.csv')])
         }
         
       }
