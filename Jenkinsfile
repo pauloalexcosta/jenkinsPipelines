@@ -37,10 +37,5 @@ pipeline {
         zip(zipFile: 'Report.zip', archive: true, dir: 'Reports')
       }
     }
-    stage('Email') {
-      steps {
-        emailext(subject: 'Jmeter Test has finished', body: 'Take it.', to: 'paulo.alexandre@gmail.com', attachmentsPattern: 'Report.zip')
-      }
-    }
   }
 }
