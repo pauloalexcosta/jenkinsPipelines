@@ -13,6 +13,7 @@ pipeline {
       steps {
         bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -n -t E:/JMeter/Resources/Webinar/Scripts/TaskManager.jmx -l TaskManager.csv', encoding: 'UTF8')
         archiveArtifacts(artifacts: 'TaskManager.csv', allowEmptyArchive: true, onlyIfSuccessful: true)
+        archiveArtifacts(artifacts: 'TaskManagerResults.csv', onlyIfSuccessful: true)
       }
     }
     stage('Create Reporting') {
@@ -27,6 +28,7 @@ pipeline {
           },
           "Create Jmeter HTML": {
             bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g E:/JMeter/Resources/Webinar/Results/TaskManagerResults.csv -o Reports/', encoding: 'utf8', returnStdout: true)
+            bat 'del /f E:/JMeter/Resources/Webinar/Results/TaskManagerResults.csv'
             
           }
         )
