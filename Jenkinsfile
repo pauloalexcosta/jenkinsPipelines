@@ -4,7 +4,7 @@ pipeline {
     stage('A Fresh Workspace') {
       steps {
         script {
-          fileOperations([folderDeleteOperation('Reports'), fileDeleteOperation(excludes: '', includes: 'Report.zip'), fileDeleteOperation(excludes: '', includes: 'TaskManager.csv')])
+          fileOperations([folderDeleteOperation('Reports'), fileDeleteOperation(excludes: '', includes: 'Report.zip')])
         }
         
       }
@@ -20,7 +20,7 @@ pipeline {
         parallel(
           "Run Performance Plugin": {
             script {
-              performanceReport compareBuildPrevious: true, configType: 'ART', errorFailedThreshold: 3, errorUnstableResponseTimeThreshold: '', errorUnstableThreshold: 1, failBuildIfNoResultFile: true, modeOfThreshold: true, modePerformancePerTestCase: true, modeThroughput: true, nthBuildNumber: 0, parsers: [[$class: 'JMeterCsvParser', delimiter: ',', glob: 'TaskManager.csv', pattern: 'timeStamp,elapsed,url,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,Latency,IdleTime,Connect', skipFirstLine: true]], relativeFailedThresholdNegative: 100, relativeFailedThresholdPositive: 100, relativeUnstableThresholdNegative: 50, relativeUnstableThresholdPositive: 50
+              performanceReport compareBuildPrevious: true, configType: 'ART', errorFailedThreshold: 3, errorUnstableResponseTimeThreshold: '', errorUnstableThreshold: 1, failBuildIfNoResultFile: true, modeOfThreshold: true, modePerformancePerTestCase: true, modeThroughput: true, nthBuildNumber: 0, parsers: [[$class: 'JMeterCsvParser', delimiter: ',', glob: 'TaskManager.csv', pattern: 'timeStamp,elapsed,url,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,Latency,IdleTime,Connect', skipFirstLine: true]], relativeFailedThresholdNegative: 500, relativeFailedThresholdPositive: 500, relativeUnstableThresholdNegative: 200, relativeUnstableThresholdPositive: 200
             }
             
             
