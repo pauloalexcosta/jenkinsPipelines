@@ -12,7 +12,6 @@ pipeline {
     stage('Run JMeter Test') {
       steps {
         bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -n -t E:/JMeter/Resources/Webinar/Scripts/TaskManager.jmx -l TaskManager.csv', encoding: 'UTF8')
-        archiveArtifacts(artifacts: 'TaskManager.csv', allowEmptyArchive: true, onlyIfSuccessful: true)
         archiveArtifacts(artifacts: 'TaskManagerResults.csv', onlyIfSuccessful: true)
       }
     }
