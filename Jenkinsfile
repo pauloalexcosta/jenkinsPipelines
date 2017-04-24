@@ -20,7 +20,7 @@ pipeline {
         parallel(
           "Run Performance Plugin": {
             script {
-              performanceReport compareBuildPrevious: true, configType: 'ART', errorFailedThreshold: 3, errorUnstableResponseTimeThreshold: '', errorUnstableThreshold: 1, failBuildIfNoResultFile: true, modeOfThreshold: false, modePerformancePerTestCase: true, modeThroughput: true, nthBuildNumber: 0, parsers: [[$class: 'JMeterCsvParser', delimiter: ',', glob: 'TaskManager.csv', pattern: 'timeStamp,elapsed,url,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,Latency,IdleTime,Connect', skipFirstLine: true]], relativeFailedThresholdNegative: 2000, relativeFailedThresholdPositive: 2000, relativeUnstableThresholdNegative: 1000, relativeUnstableThresholdPositive: 1000
+              performanceReport compareBuildPrevious: true, configType: 'ART', errorFailedThreshold: 3, errorUnstableResponseTimeThreshold: '', errorUnstableThreshold: 1, failBuildIfNoResultFile: false, modeOfThreshold: true, modePerformancePerTestCase: false, modeThroughput: true, nthBuildNumber: 0, parsers: [[$class: 'JMeterCsvParser', delimiter: ',', glob: 'TaskManager.csv', pattern: 'timeStamp,elapsed,url,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,Latency,IdleTime,Connect', skipFirstLine: true]], relativeFailedThresholdNegative: 2000, relativeFailedThresholdPositive: 2000, relativeUnstableThresholdNegative: 1000, relativeUnstableThresholdPositive: 1000
             }
             
             
