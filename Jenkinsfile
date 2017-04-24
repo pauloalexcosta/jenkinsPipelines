@@ -11,7 +11,7 @@ pipeline {
     }
     stage('Run JMeter Test') {
       steps {
-        bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -n -t E:/JMeter/Resources/Webinar/Scripts/TaskManager.jmx -l TaskManager.csv', encoding: 'UTF8')
+        bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -n -t E:/JMeter/Resources/Webinar/Scripts/TaskManager.jmx -l TaskManager.jtl', encoding: 'UTF8')
         archiveArtifacts(artifacts: 'TaskManagerResults.csv', onlyIfSuccessful: true)
       }
     }
@@ -20,7 +20,7 @@ pipeline {
         parallel(
           "Run Performance Plugin": {
             script {
-              performanceReport compareBuildPrevious: false, configType: 'ART', errorFailedThreshold: 10, errorUnstableResponseTimeThreshold: '', errorUnstableThreshold: 10, failBuildIfNoResultFile: false, modeOfThreshold: false, modePerformancePerTestCase: false, modeThroughput: false, nthBuildNumber: 0, parsers: [[$class: 'JMeterCsvParser', delimiter: ',', glob: 'TaskManager.csv', pattern: 'timeStamp,elapsed,url,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,Latency,IdleTime,Connect', skipFirstLine: true]], relativeFailedThresholdNegative: 2000, relativeFailedThresholdPositive: 2000, relativeUnstableThresholdNegative: 1000, relativeUnstableThresholdPositive: 1000
+              performanceReport compareBuildPrevious: false, configType: 'ART', errorFailedThreshold: 10, errorUnstableResponseTimeThreshold: '', errorUnstableThreshold: 10, failBuildIfNoResultFile: false, modeOfThreshold: false, modePerformancePerTestCase: false, modeThroughput: false, nthBuildNumber: 0, parsers: [[$class: 'JMeterCsvParser', delimiter: ',', glob: 'TaskManager.jtl', pattern: 'timeStamp,elapsed,url,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,Latency,IdleTime,Connect', skipFirstLine: true]], relativeFailedThresholdNegative: 2000, relativeFailedThresholdPositive: 2000, relativeUnstableThresholdNegative: 1000, relativeUnstableThresholdPositive: 1000
             }
             
             
