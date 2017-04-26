@@ -36,8 +36,8 @@ pipeline {
             zip(zipFile: 'Report.zip', archive: true, dir: 'Reports')
             
           },
-          "": {
-            bat(script: 'del /F /Q "E:/JMeter/Resources/Webinar/Results/TaskManagerResults.csv"', returnStatus: true, returnStdout: true)
+          "Delete Leftovers": {
+            bat(script: 'del /F /Q E:\\JMeter\\Resources\\Webinar\\Results\\TaskManagerResults.csv"', returnStatus: true, returnStdout: true)
             
           }
         )
