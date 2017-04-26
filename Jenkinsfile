@@ -40,7 +40,7 @@ pipeline {
             
           },
           "Delete Leftovers": {
-            bat(script: 'del /F /Q E://JMeter//Resources//Webinar//Results//TaskManagerResults.csv & exit 0', returnStatus: true, returnStdout: true)
+            bat(script: 'del /F /Q E:/JMeter/Resources/Webinar//Results/TaskManagerResults.csv & exit 0', returnStatus: true, returnStdout: true)
             
           }
         )
