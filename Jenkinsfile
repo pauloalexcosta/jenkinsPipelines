@@ -11,7 +11,7 @@ pipeline {
     }
     stage('Run JMeter Test') {
       steps {
-        bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -n -t E:/JMeter/Resources/Webinar/Scripts/TaskManager.jmx -l TaskManager.jtl', encoding: 'UTF8')
+        bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -n -t E:/JMeter/Resources/Webinar/Scripts/TaskManager.jmx -l TaskManager.jtl' & exit 0, encoding: 'UTF8')
         archiveArtifacts 'TaskManagerResults.csv'
       }
     }
@@ -23,7 +23,7 @@ pipeline {
             
           },
           "Create Jmeter HTML": {
-            bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g E:/JMeter/Resources/Webinar/Results/TaskManagerResults.csv -o Reports/', encoding: 'utf8', returnStdout: true)
+            bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g E:/JMeter/Resources/Webinar/Results/TaskManagerResults.csv -o Reports/' & exit 0, encoding: 'utf8', returnStdout: true)
             
           }
         )
@@ -37,7 +37,7 @@ pipeline {
             
           },
           "Delete Leftovers": {
-            bat(script: 'del /F /Q E:\\JMeter\\Resources\\Webinar\\Results\\TaskManagerResults.csv"', returnStatus: true, returnStdout: true)
+            bat(script: 'del /F /Q E:\\JMeter\\Resources\\Webinar\\Results\\TaskManagerResults.csv"' & exit 0, returnStatus: true, returnStdout: true)
             
           }
         )
