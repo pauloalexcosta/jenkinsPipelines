@@ -16,7 +16,7 @@ pipeline {
       }
     }
     stage('Create Reporting') {
-      steps {
+      /*steps {
         parallel(
           "Run Performance Plugin": {
             script {
@@ -24,7 +24,7 @@ pipeline {
             }
             
             
-          },
+          },*/
           "Create Jmeter HTML": {
             bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -g E:/JMeter/Resources/Webinar/Results/TaskManagerResults.csv -o Reports/', encoding: 'utf8', returnStdout: true)
             bat 'del /f E:\\JMeter\\Resources\\Webinar\\Results\\TaskManagerResults.csv'            
