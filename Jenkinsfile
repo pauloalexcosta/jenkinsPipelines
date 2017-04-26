@@ -12,7 +12,7 @@ pipeline {
     stage('Run JMeter Test') {
       steps {
         bat(script: 'E:/JMeter/apache-jmeter-3.1/bin/jmeter.bat -n -t E:/JMeter/Resources/Webinar/Scripts/TaskManager.jmx -l TaskManager.jtl', encoding: 'UTF8')
-        archiveArtifacts(artifacts: 'TaskManagerResults.csv', onlyIfSuccessful: true)
+        archiveArtifacts 'TaskManagerResults.csv'
       }
     }
     stage('Create Reporting') {
@@ -31,7 +31,16 @@ pipeline {
     }
     stage('Archive the HTML Report') {
       steps {
-        zip(zipFile: 'Report.zip', archive: true, dir: 'Reports')
+        parallel(
+          "Archive the HTML Report": {
+            zip(zipFile: 'Report.zip', archive: true, dir: 'Reports')
+            
+          },
+          "": {
+            bat(script: 'del /F /Q "E:/JMeter/Resources/Webinar/Results/TaskManagerResults.csv"', returnStatus: true, returnStdout: true)
+            
+          }
+        )
       }
     }
   }
