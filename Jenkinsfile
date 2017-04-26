@@ -18,8 +18,8 @@ pipeline {
     stage('Create Reporting') {
       steps {
         parallel(
-          "Run Performance Plugin": {
-            sh '1'
+          "Sleep": {
+            sleep(time: 1, unit: 'MILLISECONDS')
             
           },
           "Create Jmeter HTML": {
